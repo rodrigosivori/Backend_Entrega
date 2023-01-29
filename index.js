@@ -1,25 +1,47 @@
 class ProductManager {
-    constructor(products){
-        this.products = products;
+    constructor(){
+        this.products = [];
     }
     
+    static id = 0;
+
     addProducts(title, description, price, thumbnail, code, stock){
-        if(this.products.some(products => products.code === code )){       
-            console.log("ERROR: Ya existe");
-        }else{
-            this.products.push({title, description, price, thumbnail, code, stock, id: Math.floor(Math.random() * 2 )}); //Para probar getPorductById el 999 se puede poner en 2 para reducir el azar del numero.
+        for(let i = 0; i < this.products.length; i++){
+            if(this.products[i].code === code ){      
+                console.log("ERROR: Ya existe");
+            }
+        }
+        const newProduct = {
+            title,
+            description,
+            price,
+            thumbnail,
+            code,
+            stock
+        }
+
+        if(!Object.values(newProduct).includes(undefined)){
+            ProductManager.id = ProductManager.id + 1;
+            this.products.push({
+                ...newProduct,
+                id: ProductManager.id});
+        } else {
+            console.log("Todos los campos son requeridos");
         }
     }
+
     
-    getProducts(product){
-        console.log(product);
+    getProducts(){
+        return this.products;
     }
     
+    exist(id) {
+        return this.products.find((products) => products.id === id);
+    }
     
     getProductsById(id){
-        if(this.products.some(products => products.id === id )){
-            let filterProduct = this.products.filter(products => products.id === id)
-            console.log(filterProduct);
+        if(this.exist(id)){
+            console.log(this.exist(id));
         } else {
             console.log('Not found');
         }
@@ -31,8 +53,25 @@ class ProductManager {
 
 let producto = new ProductManager([])
 
-producto.addProducts("Producto prueba", "Esto es un producto prueba", 200, "Sin imagen", "abc123", "vacio", 25)
-console.log(producto.getProducts(producto));
-producto.addProducts("Producto prueba", "Esto es un producto prueba", 200, "Sin imagen", "abc123", "vacio", 25)
-console.log(producto.getProducts(producto));
-console.log(producto.getProductsById(1));
+// 1
+console.log("getProducts devuelve arreglo vacio: ");
+console.log(producto.getProducts());   
+
+// 2
+producto.addProducts("Producto prueba", "Esto es un producto prueba", 200, "Sin imagen", "abc123", "vacio", 25); 
+
+// 3
+console.log("getProducts devuelve el nuevo producto: ");
+console.log(producto.getProducts());
+
+// 4
+console.log("addProducts devuelve error porque ya existe: ");
+producto.addProducts("Producto prueba", "Esto es un producto prueba", 200, "Sin imagen", "abc123", "vacio", 25); 
+
+// 5
+console.log("getProductsById devuelve el producto que coincida con el id: ");
+producto.getProductsById(1);
+
+// 6
+console.log("getProductsById devuelve error si el id no esta: ");
+producto.getProductsById(15);
