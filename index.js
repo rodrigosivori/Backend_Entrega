@@ -50,7 +50,7 @@ class ProductManager {
 
     updateProducts(id, price){
         if(this.exist(id)){
-            this.products.price = price
+            this.products.splice(2, 1, price)
             console.log("Se realizo correctamente el cambio")
         } else {
             console.log("No existe ID para actualizar");
