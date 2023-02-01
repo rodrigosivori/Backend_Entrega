@@ -47,7 +47,26 @@ class ProductManager {
         }
     }
     
+
+    updateProducts(id, price){
+        if(this.exist(id)){
+            this.products.splice(2, 1, price)
+            console.log("Se realizo correctamente el cambio")
+            console.log(this.exist(id));
+        } else {
+            console.log("No existe ID para actualizar");
+    }
+    }
     
+
+    deleteProducts(id){
+        if(this.exist(id)){
+        return this.products.splice(0, 7),
+        console.log("EL PRODUCTO SE BORRO CORRECTAMENTE");
+        } else {
+            console.log("No existe ID para eliminar");
+        }
+    }
     
 }
 
@@ -74,4 +93,19 @@ producto.getProductsById(1);
 
 // 6
 console.log("getProductsById devuelve error si el id no esta: ");
-producto.getProductsById(15);
+producto.getProductsById(5);
+
+// 7
+console.log("updateProducts actualizara el valor PRICE por el que le pasemos (id, price)");
+producto.updateProducts(2, 3)
+
+//producto.getProductsById(2);
+
+
+// 8
+/* console.log("deleteProduct devuelve si se borro el producto o si no hay producto a borrar; ");
+producto.deleteProducts(1)
+ */
+
+
+
